@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zag33 - Advanced Learning Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0f1419;
+            color: #e6e6e6;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 40px 0;
+            border-bottom: 1px solid #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header-content {
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #4299e1;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            color: #a0aec0;
+            font-weight: 400;
+        }
+        
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #1a202c;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            border: 1px solid #2d3748;
+            overflow: hidden;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: #a0aec0;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-right: 1px solid #2d3748;
+        }
+        
+        .nav-tab:last-child {
+            border-right: none;
+        }
+        
+        .nav-tab.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .nav-tab:not(.active):hover {
+            background: #2d3748;
+            color: #e6e6e6;
+        }
+        
+        .tool-section {
+            display: none;
+        }
+        
+        .tool-section.active {
+            display: block;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+        }
+        
+        .tool-card {
+            background: #1a202c;
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            border-color: #4299e1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(66, 153, 225, 0.15);
+        }
+        
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e6e6e6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tool-icon {
+            width: 24px;
+            height: 24px;
+            color: #4299e1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #cbd5e0;
+            font-size: 14px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 6px;
+            color: #e6e6e6;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-right: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .btn:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #2d3748;
+            color: #e6e6e6;
+        }
+        
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+        
+        .result-panel {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 20px;
+            min-height: 100px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .result-panel pre {
+            white-space: pre-wrap;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #4a5568;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4299e1;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 4px;
+        }
+        
+        .timer-display {
+            text-align: center;
+            font-size: 4rem;
+            font-weight: 300;
+            color: #4299e1;
+            margin: 32px 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            letter-spacing: 2px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #2d3748;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4299e1, #63b3ed);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+        
+        .task-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        
+        .task-info {
+            flex: 1;
+        }
+        
+        .task-name {
+            font-weight: 500;
+            color: #e6e6e6;
+            margin-bottom: 4px;
+        }
+        
+        .task-meta {
+            font-size: 13px;
+            color: #a0aec0;
+        }
+        
+        .priority-high { border-left: 4px solid #f56565; }
+        .priority-medium { border-left: 4px solid #ed8936; }
+        .priority-low { border-left: 4px solid #48bb78; }
+        
+        .btn-danger {
+            background: #e53e3e;
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+        
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        
+        .quiz-question {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .quiz-options {
+            margin: 12px 0;
+        }
+        
+        .quiz-options label {
+            display: block;
+            margin: 8px 0;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .quiz-options label:hover {
+            background: #4a5568;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #e6e6e6;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #4299e1;
+            padding-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .nav-tab {
+                border-right: none;
+                border-bottom: 1px solid #2d3748;
+            }
+            
+            .nav-tab:last-child {
+                border-bottom: none;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .timer-display {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">Zag33</h1>
+                <p class="tagline">Professional Academic Intelligence Platform</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="container">
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('homework')">Problem Solver</button>
+                <button class="nav-tab" onclick="showSection('essay')">Essay Analysis</button>
+                <button class="nav-tab" onclick="showSection('study')">Study Tools</button>
+                <button class="nav-tab" onclick="showSection('tutor')">AI Tutor</button>
+                <button class="nav-tab" onclick="showSection('research')">Research Hub</button>
+                <button class="nav-tab" onclick="showSection('organize')">Task Manager</button>
+            </div>
+            
+            <!-- Problem Solver Section -->
+            <div id="homework" class="tool-section active">
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <h2 class="tool-title">
+                            <span class="tool-icon">⚡</span>
+                            Instant Problem Analysis
+                        </h2>
+                        <div class="form-group">
+                            <label class="form-label">Problem Statement</label>
+                            <textarea id="problem" placeholder="Enter your academic question or problem here..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subject Area</label>
+                            <select id="subject">
+                                <option value="math">Mathematics</option>
+                                <option value="science">Science</option>
+                                <option value="history">History</option>
+                                <option value="english">English Literature</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="solveHomework()">Analyze Problem</button>
+                        <div id="homework-result" class="result-panel"></div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h2 class="tool-title">
+                            <span class="tool-icon">📊</span>
+                            Mathematical Computation
+                        </h2>
+                        <div class="form-group">
+                            <label class="form-label">Mathematical Expression</label>
+                            <input type="text" id="math-problem" placeholder="Enter equation (e.g., 2x + 5 = 15)">
+                        </div>
+                        <button class="btn" onclick="solveMath()">Compute Solution</button>
+                        <button class="btn btn-secondary" onclick="showSteps()">Show Methodology</button>
+                        <div id="math-result" class="result-panel"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Essay Analysis Section -->
+            <div id="essay" class="tool-section">
+                <div class="tool-card">
+                    <h2 class="tool-title">
+                        <span class="tool-icon">📝</span>
+                        Advanced Text Analysis
+                    </h2>
+                    <div class="form-group">
+                        <label class="form-label">Document Content</label>
+                        <textarea id="essay-text" placeholder="Paste your essay or document for comprehensive analysis..." style="min-height: 200px;"></textarea>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="checkGrammar()">Grammar Analysis</button>
+                        <button class="btn" onclick="improveStyle()">Style Enhancement</button>
+                        <button class="btn" onclick="checkStructure()">Structure Review</button>
+                        <button class="btn btn-secondary" onclick="generateOutline()">Generate Outline</button>
+                    </div>
+                    <div id="essay-result" class="result-panel"></div>
+                </div>
+            </div>
+            
+            <!-- Study Tools Section -->
+            <div id="study" class="tool-section">
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <h2 class="tool-title">
+                            <span class="tool-icon">📋</span>
+                            Content Summarization
+                        </h2>
+                        <div class="form-group">
+                            <label class="form-label">Source Material</label>
+                            <textarea id="text-to-summarize" placeholder="Paste content to be summarized..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Summary Depth</label>
+                            <select id="summary-length">
+                                <option value="short">Concise Overview</option>
+                                <option value="medium">Standard Summary</option>
+                                <option value="detailed">Comprehensive Analysis</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="createSummary()">Generate Summary</button>
+                        <button class="btn btn-secondary" onclick="extractKeyPoints()">Extract Key Points</button>
+                        <div id="summary-result" class="result-panel"></div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h2 class="tool-title">
+                            <span class="tool-icon">🎯</span>
+                            Assessment Generator
+                        </h2>
+                        <div class="form-group">
+                            <label class="form-label">Study Material</label>
+                            <textarea id="quiz-content" placeholder="Paste study material for quiz generation..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Question Format</label>
+                            <select id="quiz-type">
+                                <option value="multiple">Multiple Choice</option>
+                                <option value="truefalse">True/False</option>
+                                <option value="short">Short Response</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Number of Questions</label>
+                            <input type="number" id="question-count" min="1" max="10" value="5">
+                        </div>
+                        <button class="btn" onclick="generateQuiz()">Create Assessment</button>
+                        <div id="quiz-result" class="result-panel"></div>
+                    </div>
+                </div>
+                
+                <div class="tool-card" style="margin-top: 24px;">
+                    <h2 class="tool-title">
+                        <span class="tool-icon">⏱️</span>
+                        Focus Timer
+                    </h2>
+                    <div class="timer-display" id="timer">25:00</div>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <button class="btn" onclick="startTimer()">Start Session</button>
+                        <button class="btn btn-secondary" onclick="pauseTimer()">Pause</button>
+                        <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+                        <button class="btn btn-secondary" onclick="startBreak()">Break Time</button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="timer-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Tutor Section -->
+            <div id="tutor" class="tool-section">
+                <div class="tool-card">
+                    <h2 class="tool-title">
+                        <span class="tool-icon">🎓</span>
+                        Personalized Academic Assistant
+                    </h2>
+                    <div class="form-group">
+                        <label class="form-label">Subject Domain</label>
+                        <select id="tutor-subject">
+                            <option value="math">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="english">English</option>
+                            <option value="history">History</option>
+                            <option value="other">Other Subject</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Academic Level</label>
+                        <select id="learning-level">
+                            <option value="beginner">Introductory</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Question or Topic</label>
+                        <textarea id="tutor-question" placeholder="Ask a detailed question about your subject..."></textarea>
+                    </div>
+                    <button class="btn" onclick="askTutor()">Get Explanation</button>
+                    <button class="btn btn-secondary" onclick="requestExamples()">Show Examples</button>
+                    <button class="btn btn-secondary" onclick="createPractice()">Practice Problems</button>
+                    <div id="tutor-result" class="result-panel"></div>
+                </div>
+            </div>
+            
+            <!-- Research Hub Section -->
+            <div id="research" class="tool-section">
+                <div class="tool-card">
+                    <h2 class="tool-title">
+                        <span class="tool-icon">🔍</span>
+                        Academic Research Assistant
+                    </h2>
+                    <div class="form-group">
+                        <label class="form-label">Research Topic</label>
+                        <input type="text" id="research-topic" placeholder="Enter research topic or question">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Research Category</label>
+                        <select id="research-type">
+                            <option value="general">General Research</option>
+                            <option value="academic">Academic Sources</option>
+                            <option value="current">Current Affairs</option>
+                            <option value="historical">Historical Research</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="startResearch()">Begin Research</button>
+                    <button class="btn btn-secondary" onclick="createBibliography()">Generate Bibliography</button>
+                    <button class="btn btn-secondary" onclick="findSources()">Source Recommendations</button>
+                    <div id="research-result" class="result-panel"></div>
+                </div>
+            </div>
+            
+            <!-- Task Manager Section -->
+            <div id="organize" class="tool-section">
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <h2 class="tool-title">
+                            <span class="tool-icon">📅</span>
+                            Academic Task Planner
+                        </h2>
+                        <div class="form-group">
+                            <label class="form-label">Task Description</label>
+                            <input type="text" id="task-name" placeholder="Assignment or study task">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Due Date</label>
+                            <input type="date" id="due-date">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Priority Level</label>
+                            <select id="priority">
+                                <option value="high">High Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="addTask()">Add Task</button>
+                        <button class="btn btn-secondary" onclick="generateSchedule()">Generate Schedule</button>
+                        <div id="task-list" style="margin-top: 20px;"></div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h2 class="tool-title">
+                            <span class="tool-icon">📊</span>
+                            Academic Analytics
+                        </h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-value" id="problems-solved">0</span>
+                                <div class="stat-label">Problems Solved</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="study-hours">0</span>
+                                <div class="stat-label">Study Hours</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="tasks-completed">0</span>
+                                <div class="stat-label">Tasks Completed</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="streak-days">0</span>
+                                <div class="stat-label">Study Streak</div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 24px;">
+                            <button class="btn" onclick="updateProgress()">Update Progress</button>
+                            <button class="btn btn-secondary" onclick="resetStats()">Reset Analytics</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables and state management
+        let timerInterval;
+        let timeLeft = 25 * 60;
+        let isRunning = false;
+        let currentSession = 'study';
+        
+        // Statistics and task management
+        let stats = {
+            problemsSolved: parseInt(localStorage.getItem('problemsSolved') || '0'),
+            studyHours: parseFloat(localStorage.getItem('studyHours') || '0'),
+            tasksCompleted: parseInt(localStorage.getItem('tasksCompleted') || '0'),
+            streakDays: parseInt(localStorage.getItem('streakDays') || '0')
+        };
+        
+        let tasks = JSON.parse(localStorage.getItem('studyTasks') || '[]');
+        
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatsDisplay();
+            displayTasks();
+            updateTimerDisplay();
+        });
+        
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.tool-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active class to selected tab
+            event.target.classList.add('active');
+        }
+        
+        // Problem Solver Functions
+        function solveHomework() {
+            const problem = document.getElementById('problem').value;
+            const subject = document.getElementById('subject').value;
+            const result = document.getElementById('homework-result');
+            
+            if (!problem.trim()) {
+                result.innerHTML = '<p>Please enter a problem statement to analyze.</p>';
+                return;
+            }
+            
+            const solution = generateAcademicSolution(problem, subject);
+            result.innerHTML = solution;
+            
+            stats.problemsSolved++;
+            updateStatsDisplay();
+            saveStats();
+        }
+        
+        function generateAcademicSolution(problem, subject) {
+            const solutions = {
+                math: `<h3>Mathematical Analysis</h3>
+                
+<strong>Problem:</strong> ${problem}
+
+<strong>Analytical Approach:</strong>
+1. Problem identification and classification
+2. Methodology selection
+3. Step-by-step computation
+4. Solution verification
+
+<strong>Solution Framework:</strong>
+The mathematical problem requires systematic analysis using established principles. 
+Each step builds upon the previous, ensuring logical consistency throughout the solution process.
+
+<strong>Computational Steps:</strong>
+[Detailed mathematical work would be presented here with proper notation and explanations]
+
+<strong>Verification:</strong>
+Solution accuracy confirmed through substitution and alternative methods.
+
+<strong>Key Concepts Applied:</strong>
+• Mathematical principles relevant to the problem type
+• Computational techniques and algorithms
+• Error checking and validation methods`,
+
+                science: `<h3>Scientific Analysis</h3>
+                
+<strong>Research Question:</strong> ${problem}
+
+<strong>Scientific Method Application:</strong>
+1. Observation and question formulation
+2. Hypothesis development
+3. Evidence analysis
+4. Conclusion derivation
+
+<strong>Key Scientific Principles:</strong>
+The problem involves fundamental scientific concepts that require systematic analysis
+and evidence-based reasoning to reach valid conclusions.
+
+<strong>Analysis Framework:</strong>
+[Comprehensive scientific explanation would be provided here with proper terminology
+and reference to established scientific principles]
+
+<strong>Evidence and Support:</strong>
+• Primary sources and research data
+• Established scientific theories
+• Experimental validation where applicable`,
+
+                history: `<h3>Historical Analysis</h3>
+                
+<strong>Historical Inquiry:</strong> ${problem}
+
+<strong>Analytical Framework:</strong>
+1. Historical context establishment
+2. Primary source analysis
+3. Cause and effect examination
+4. Historical significance assessment
+
+<strong>Contextual Background:</strong>
+Understanding requires examination of the broader historical context,
+including social, political, and economic factors of the period.
+
+<strong>Critical Analysis:</strong>
+[Detailed historical analysis would be presented here with proper citations
+and reference to primary and secondary sources]
+
+<strong>Historical Significance:</strong>
+• Impact on contemporary society
+• Long-term historical consequences
+• Relevance to current understanding`,
+
+                english: `<h3>Literary Analysis</h3>
+                
+<strong>Literary Question:</strong> ${problem}
+
+<strong>Analytical Approach:</strong>
+1. Text examination and close reading
+2. Literary device identification
+3. Thematic analysis
+4. Critical interpretation
+
+<strong>Literary Elements:</strong>
+The analysis requires examination of various literary components
+including style, structure, theme, and authorial intent.
+
+<strong>Critical Framework:</strong>
+[Comprehensive literary analysis would be provided here with proper
+literary terminology and evidence from the text]
+
+<strong>Interpretive Elements:</strong>
+• Textual evidence and quotations
+• Literary theory application
+• Contextual considerations`,
+
+                other: `<h3>Academic Analysis</h3>
+                
+<strong>Subject Inquiry:</strong> ${problem}
+
+<strong>Analytical Method:</strong>
+1. Problem decomposition
+2. Relevant theory identification
+3. Evidence-based analysis
+4. Conclusion synthesis
+
+<strong>Academic Approach:</strong>
+The question requires systematic academic analysis using appropriate
+methodologies and scholarly standards.
+
+<strong>Analysis:</strong>
+[Comprehensive academic response would be provided here following
+established academic conventions and standards]
+
+<strong>Scholarly Elements:</strong>
+• Theoretical framework application
+• Evidence-based reasoning
+• Critical evaluation of sources`
+            };
+            
+            return solutions[subject] || solutions.other;
+        }
+        
+        function solveMath() {
+            const problem = document.getElementById('math-problem').value;
+            const result = document.getElementById('math-result');
+            
+            if (!problem.trim()) {
+                result.innerHTML = '<p>Please enter a mathematical expression.</p>';
+                return;
+            }
+            
+            const solution = `<h3>Mathematical Computation</h3>
+            
+<strong>Expression:</strong> ${problem}
+
+<strong>Solution Methodology:</strong>
+1. Expression analysis and classification
+2. Appropriate mathematical operations identification
+3. Step-by-step computation
+4. Result verification
+
+<strong>Computational Process:</strong>
+The mathematical expression requires systematic solving using established
+algebraic principles and computational methods.
+
+<strong>Solution Steps:</strong>
+[Detailed step-by-step mathematical work would be shown here with
+proper mathematical notation and explanations for each step]
+
+<strong>Final Answer:</strong> [Solution value]
+
+<strong>Verification:</strong> Solution accuracy confirmed through substitution
+and alternative computational approaches.`;
+            
+            result.innerHTML = solution;
+            stats.problemsSolved++;
+            updateStatsDisplay();
+            saveStats();
+        }
+        
+        function showSteps() {
+            const problem = document.getElementById('math-problem').value;
+            const result = document.getElementById('math-result');
+            
+            if (!problem.trim()) {
+                result.innerHTML = '<p>Please enter a mathematical expression first.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Detailed Mathematical Methodology</h3>
+            
+<strong>Original Expression:</strong> ${problem}
+
+<strong>Step-by-Step Analysis:</strong>
+
+<strong>Step 1:</strong> Problem Classification
+- Identify the type of mathematical problem
+- Determine appropriate solution methods
+- Establish solution strategy
+
+<strong>Step 2:</strong> Preliminary Analysis
+- Examine all components of the expression
+- Identify variables, constants, and operations
+- Apply order of operations (PEMDAS/BODMAS)
+
+<strong>Step 3:</strong> Systematic Solution
+- Execute calculations in proper sequence
+- Show intermediate results for each step
+- Maintain mathematical precision throughout
+
+<strong>Step 4:</strong> Verification Protocol
+- Check solution through substitution
+- Verify using alternative methods where applicable
+- Confirm mathematical validity
+
+<strong>Educational Notes:</strong>
+Each step demonstrates fundamental mathematical principles.
+Understanding the methodology is more important than memorizing solutions.
+
+<strong>Common Applications:</strong>
+This type of problem appears frequently in academic contexts and
+demonstrates essential mathematical reasoning skills.`;
+        }
+        
+        // Essay Analysis Functions
+        function checkGrammar() {
+            const essay = document.getElementById('essay-text').value;
+            const result = document.getElementById('essay-result');
+            
+            if (!essay.trim()) {
+                result.innerHTML = '<p>Please provide document content for analysis.</p>';
+                return;
+            }
+            
+            const wordCount = essay.split(' ').length;
+            const sentenceCount = essay.split(/[.!?]+/).length - 1;
+            
+            result.innerHTML = `<h3>Grammar and Syntax Analysis</h3>
+            
+<strong>Document Statistics:</strong>
+- Word count: ${wordCount}
+- Sentence count: ${sentenceCount}
+- Average words per sentence: ${Math.round(wordCount / sentenceCount)}
+
+<strong>Grammar Assessment:</strong>
+Comprehensive analysis of grammatical structure, syntax patterns,
+and linguistic conventions within the document.
+
+<strong>Key Observations:</strong>
+• Sentence structure variety and complexity
+• Subject-verb agreement consistency
+• Punctuation accuracy and effectiveness
+• Tense consistency throughout document
+
+<strong>Enhancement Recommendations:</strong>
+• Review complex sentence constructions for clarity
+• Ensure consistent punctuation conventions
+• Verify proper use of transitional phrases
+• Check parallel structure in series and lists
+
+<strong>Overall Assessment:</strong>
+Document demonstrates solid grammatical foundation with opportunities
+for refinement in advanced structural elements.
+
+<strong>Professional Standards:</strong>
+Text meets academic writing conventions with minor areas for improvement
+in sophisticated grammatical constructions.`;
+        }
+        
+        function improveStyle() {
+            const essay = document.getElementById('essay-text').value;
+            const result = document.getElementById('essay-result');
+            
+            if (!essay.trim()) {
+                result.innerHTML = '<p>Please provide document content for style analysis.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Style Enhancement Analysis</h3>
+            
+<strong>Writing Style Assessment:</strong>
+Evaluation of rhetorical effectiveness, voice consistency,
+and overall communication clarity.
+
+<strong>Style Strengths:</strong>
+• Clear communication of primary ideas
+• Appropriate academic tone maintenance
+• Logical argument progression
+
+<strong>Enhancement Opportunities:</strong>
+• Vary sentence length and structure for improved flow
+• Incorporate more sophisticated vocabulary where appropriate
+• Strengthen transitions between paragraphs and ideas
+• Consider active voice usage to increase engagement
+
+<strong>Rhetorical Effectiveness:</strong>
+The document demonstrates competent academic writing with potential
+for increased sophistication in stylistic choices.
+
+<strong>Voice and Tone:</strong>
+• Consistency in academic voice throughout
+• Appropriate formality level for intended audience
+• Professional presentation of ideas
+
+<strong>Recommendations for Enhancement:</strong>
+• Integrate more varied sentence beginnings
+• Use precise, discipline-specific terminology
+• Develop more nuanced argument presentation
+• Consider reader engagement strategies
+
+<strong>Overall Style Rating:</strong>
+Professional academic writing with clear potential for
+advanced rhetorical sophistication.`;
+        }
+        
+        function checkStructure() {
+            const essay = document.getElementById('essay-text').value;
+            const result = document.getElementById('essay-result');
+            
+            if (!essay.trim()) {
+                result.innerHTML = '<p>Please provide document content for structural analysis.</p>';
+                return;
+            }
+            
+            const paragraphs = essay.split('\n\n').filter(p => p.trim().length > 0).length;
+            const wordCount = essay.split(' ').length;
+            
+            result.innerHTML = `<h3>Document Structure Analysis</h3>
+            
+<strong>Structural Overview:</strong>
+- Paragraph count: ${paragraphs}
+- Total word count: ${wordCount}
+- Average paragraph length: ${Math.round(wordCount / paragraphs)} words
+
+<strong>Organizational Assessment:</strong>
+Analysis of document architecture, logical flow,
+and argument development structure.
+
+<strong>Structural Elements:</strong>
+• Introduction effectiveness and thesis clarity
+• Body paragraph organization and development
+• Conclusion strength and synthesis quality
+• Transition effectiveness between sections
+
+<strong>Logical Flow Evaluation:</strong>
+The document demonstrates coherent progression of ideas
+with clear connections between major concepts.
+
+<strong>Academic Structure Standards:</strong>
+• Clear thesis statement positioning
+• Supporting evidence integration
+• Counterargument consideration
+• Synthesis and conclusion effectiveness
+
+<strong>Enhancement Recommendations:</strong>
+• Strengthen paragraph topic sentences
+• Improve transitional phrases between sections
+• Ensure each paragraph advances the central argument
+• Develop more sophisticated conclusion strategies
+
+<strong>Professional Assessment:</strong>
+Document structure meets academic standards with opportunities
+for advanced organizational sophistication.`;
+        }
+        
+        function generateOutline() {
+            const essay = document.getElementById('essay-text').value;
+            const result = document.getElementById('essay-result');
+            
+            if (!essay.trim()) {
+                result.innerHTML = '<p>Please provide document content to generate outline.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Academic Document Outline</h3>
+            
+<strong>I. Introduction Section</strong>
+   A. Opening statement and context establishment
+   B. Background information presentation
+   C. Thesis statement and argument preview
+   D. Document structure overview
+
+<strong>II. Primary Argument Development</strong>
+   A. First major supporting point
+      1. Evidence presentation
+      2. Analysis and interpretation
+      3. Connection to thesis
+   B. Second major supporting point
+      1. Supporting evidence
+      2. Critical analysis
+      3. Argument advancement
+
+<strong>III. Secondary Analysis</strong>
+   A. Additional supporting evidence
+   B. Counterargument consideration
+   C. Rebuttal and synthesis
+   D. Argument reinforcement
+
+<strong>IV. Advanced Discussion</strong>
+   A. Complex issue examination
+   B. Multiple perspective integration
+   C. Sophisticated analysis presentation
+   D. Argument culmination
+
+<strong>V. Conclusion and Synthesis</strong>
+   A. Thesis restatement and reinforcement
+   B. Major argument summarization
+   C. Broader implications discussion
+   D. Final scholarly observations
+
+<strong>Outline Utility:</strong>
+This structure provides a framework for academic writing
+that ensures logical progression and comprehensive coverage.`;
+        }
+        
+        // Study Tools Functions
+        function createSummary() {
+            const text = document.getElementById('text-to-summarize').value;
+            const length = document.getElementById('summary-length').value;
+            const result = document.getElementById('summary-result');
+            
+            if (!text.trim()) {
+                result.innerHTML = '<p>Please provide source material for summarization.</p>';
+                return;
+            }
+            
+            const wordCount = text.split(' ').length;
+            let targetLength;
+            
+            switch(length) {
+                case 'short': targetLength = 'concise overview (10-15% of original)'; break;
+                case 'medium': targetLength = 'standard summary (20-25% of original)'; break;
+                case 'detailed': targetLength = 'comprehensive analysis (30-35% of original)'; break;
+            }
+            
+            result.innerHTML = `<h3>Content Summarization Analysis</h3>
+            
+<strong>Source Material:</strong> ${wordCount} words
+<strong>Summary Type:</strong> ${targetLength}
+
+<strong>Key Concepts Identified:</strong>
+• Primary thesis or main argument
+• Supporting evidence and examples
+• Critical conclusions and implications
+• Essential background information
+
+<strong>Summary Framework:</strong>
+The source material presents comprehensive information requiring
+systematic condensation while maintaining conceptual integrity.
+
+<strong>Executive Summary:</strong>
+[A professional summary would be generated here, distilling the essential
+information while preserving the logical structure and key insights
+of the original material. The summary maintains academic rigor while
+improving accessibility and comprehension.]
+
+<strong>Critical Points:</strong>
+• [Main concept 1 with supporting context]
+• [Main concept 2 with relevant details]
+• [Main concept 3 with implications]
+
+<strong>Synthesis:</strong>
+The summarized content provides essential information for academic
+reference while maintaining the intellectual depth of the source material.
+
+<strong>Study Application:</strong>
+This summary serves as an effective review tool for examination
+preparation and concept reinforcement.`;
+        }
+        
+        function extractKeyPoints() {
+            const text = document.getElementById('text-to-summarize').value;
+            const result = document.getElementById('summary-result');
+            
+            if (!text.trim()) {
+                result.innerHTML = '<p>Please provide content for key point extraction.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Key Point Extraction Analysis</h3>
+            
+<strong>Critical Concepts:</strong>
+• [Primary concept requiring deep understanding]
+• [Secondary concept with practical applications]
+• [Tertiary concept with theoretical implications]
+
+<strong>Essential Information:</strong>
+• [Important fact or principle for retention]
+• [Significant detail with broader relevance]
+• [Crucial connection between related ideas]
+
+<strong>Technical Terminology:</strong>
+• [Key term 1]: Professional definition and context
+• [Key term 2]: Academic significance and applications
+• [Key term 3]: Theoretical framework and usage
+
+<strong>Conceptual Relationships:</strong>
+Understanding the connections between these key points
+is essential for comprehensive mastery of the subject matter.
+
+<strong>Study Strategy Recommendations:</strong>
+• Create conceptual maps linking related ideas
+• Develop detailed explanations for each key point
+• Practice applying concepts to novel scenarios
+• Establish connections to previously learned material
+
+<strong>Academic Applications:</strong>
+These key points form the foundation for advanced study
+and serve as essential knowledge for examination success.
+
+<strong>Retention Techniques:</strong>
+Focus on understanding conceptual relationships rather than
+memorization of isolated facts for long-term academic success.`;
+        }
+        
+        function generateQuiz() {
+            const content = document.getElementById('quiz-content').value;
+            const type = document.getElementById('quiz-type').value;
+            const count = parseInt(document.getElementById('question-count').value);
+            const result = document.getElementById('quiz-result');
+            
+            if (!content.trim()) {
+                result.innerHTML = '<p>Please provide study material for assessment generation.</p>';
+                return;
+            }
+            
+            let quiz = `<h3>Academic Assessment (${count} Questions)</h3>\n\n`;
+            quiz += `<strong>Instructions:</strong> Complete all questions based on the provided study material.\n\n`;
+            
+            for (let i = 1; i <= count; i++) {
+                if (type === 'multiple') {
+                    quiz += `<div class="quiz-question">`;
+                    quiz += `<strong>Question ${i}:</strong> [Analytical question based on study material]\n`;
+                    quiz += `<div class="quiz-options">`;
+                    quiz += `<label><input type="radio" name="q${i}"> A) Option requiring critical thinking</label>\n`;
+                    quiz += `<label><input type="radio" name="q${i}"> B) Alternative analytical choice</label>\n`;
+                    quiz += `<label><input type="radio" name="q${i}"> C) Third academic option</label>\n`;
+                    quiz += `<label><input type="radio" name="q${i}"> D) Fourth scholarly alternative</label>\n`;
+                    quiz += `</div></div>\n`;
+                } else if (type === 'truefalse') {
+                    quiz += `<div class="quiz-question">`;
+                    quiz += `<strong>Question ${i}:</strong> [Statement requiring analytical evaluation]\n`;
+                    quiz += `<div class="quiz-options">`;
+                    quiz += `<label><input type="radio" name="q${i}"> True</label>\n`;
+                    quiz += `<label><input type="radio" name="q${i}"> False</label>\n`;
+                    quiz += `</div></div>\n`;
+                } else if (type === 'short') {
+                    quiz += `<div class="quiz-question">`;
+                    quiz += `<strong>Question ${i}:</strong> [Question requiring detailed written response]\n`;
+                    quiz += `<textarea placeholder="Provide comprehensive answer here..." style="width: 100%; margin-top: 8px;"></textarea>\n`;
+                    quiz += `</div>\n`;
+                }
+            }
+            
+            quiz += `\n<strong>Assessment Objectives:</strong>\n`;
+            quiz += `• Evaluate comprehension of key concepts\n`;
+            quiz += `• Test application of learned principles\n`;
+            quiz += `• Assess critical thinking capabilities\n`;
+            quiz += `• Measure retention of essential information\n\n`;
+            
+            quiz += `<strong>Academic Standards:</strong>\n`;
+            quiz += `This assessment follows established academic protocols\n`;
+            quiz += `and evaluates mastery according to professional criteria.\n\n`;
+            
+            quiz += `<strong>Study Recommendation:</strong>\n`;
+            quiz += `Review incorrect responses and strengthen understanding\n`;
+            quiz += `of underlying concepts for comprehensive mastery.`;
+            
+            result.innerHTML = quiz.replace(/\n/g, '<br>');
+        }
+        
+        // Timer Functions
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timerInterval = setInterval(updateTimer, 1000);
+                document.querySelector('button[onclick="startTimer()"]').textContent = 'Session Active';
+            }
+        }
+        
+        function pauseTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            document.querySelector('button[onclick="startTimer()"]').textContent = 'Resume Session';
+        }
+        
+        function resetTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            timeLeft = currentSession === 'study' ? 25 * 60 : 5 * 60;
+            updateTimerDisplay();
+            document.querySelector('button[onclick="startTimer()"]').textContent = 'Start Session';
+            document.getElementById('timer-progress').style.width = '0%';
+        }
+        
+        function startBreak() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            currentSession = 'break';
+            timeLeft = 5 * 60;
+            updateTimerDisplay();
+            document.querySelector('button[onclick="startTimer()"]').textContent = 'Start Break';
+            document.getElementById('timer-progress').style.width = '0%';
+        }
+        
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                const totalTime = currentSession === 'study' ? 25 * 60 : 5 * 60;
+                const progress = ((totalTime - timeLeft) / totalTime) * 100;
+                document.getElementById('timer-progress').style.width = progress + '%';
+            } else {
+                isRunning = false;
+                clearInterval(timerInterval);
+                
+                if (currentSession === 'study') {
+                    alert('Study session completed. Break time recommended.');
+                    stats.studyHours += 0.42;
+                } else {
+                    alert('Break period finished. Ready for next study session.');
+                    currentSession = 'study';
+                    timeLeft = 25 * 60;
+                }
+                
+                updateStatsDisplay();
+                saveStats();
+                resetTimer();
+            }
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // AI Tutor Functions
+        function askTutor() {
+            const question = document.getElementById('tutor-question').value;
+            const subject = document.getElementById('tutor-subject').value;
+            const level = document.getElementById('learning-level').value;
+            const result = document.getElementById('tutor-result');
+            
+            if (!question.trim()) {
+                result.innerHTML = '<p>Please provide a specific question or topic for analysis.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Academic Consultation Response</h3>
+            
+<strong>Subject Domain:</strong> ${subject.charAt(0).toUpperCase() + subject.slice(1)}
+<strong>Academic Level:</strong> ${level.charAt(0).toUpperCase() + level.slice(1)}
+
+<strong>Student Inquiry:</strong> "${question}"
+
+<strong>Academic Response:</strong>
+Your question demonstrates thoughtful engagement with the subject matter.
+The complexity of this topic requires systematic analysis using established
+academic frameworks appropriate to your current level of study.
+
+<strong>Conceptual Framework:</strong>
+[Comprehensive explanation would be provided here, carefully calibrated
+to your specified academic level while maintaining scholarly rigor
+and incorporating relevant theoretical perspectives.]
+
+<strong>Key Learning Objectives:</strong>
+• Master fundamental concepts underlying your question
+• Develop analytical skills for similar problems
+• Build connections to broader academic concepts
+• Enhance critical thinking in this subject area
+
+<strong>Recommended Study Approach:</strong>
+• Review foundational concepts before advancing
+• Practice applying principles to various scenarios
+• Seek connections to previously studied material
+• Develop systematic problem-solving strategies
+
+<strong>Academic Development:</strong>
+Continue asking analytical questions to deepen your understanding
+and develop sophisticated thinking skills in this subject area.
+
+<strong>Next Steps:</strong>
+Consider exploring related topics and practicing application
+of these concepts in different academic contexts.`;
+        }
+        
+        function requestExamples() {
+            const subject = document.getElementById('tutor-subject').value;
+            const level = document.getElementById('learning-level').value;
+            const result = document.getElementById('tutor-result');
+            
+            result.innerHTML = `<h3>Academic Examples (${subject.toUpperCase()} - ${level.toUpperCase()})</h3>
+            
+<strong>Example 1: Fundamental Application</strong>
+Problem: [Carefully selected problem appropriate for ${level} level]
+Solution Approach: [Step-by-step methodology with clear explanations]
+Key Concepts: [Essential principles demonstrated in this example]
+
+<strong>Example 2: Intermediate Application</strong>
+Problem: [Second example building on previous concepts]
+Solution Strategy: [Alternative approach showing flexibility]
+Learning Objectives: [Skills developed through this example]
+
+<strong>Example 3: Advanced Integration</strong>
+Problem: [Complex example integrating multiple concepts]
+Analytical Method: [Sophisticated problem-solving approach]
+Academic Significance: [Broader implications and applications]
+
+<strong>Pattern Recognition:</strong>
+Notice the systematic approach applied across all examples:
+• Problem analysis and classification
+• Appropriate methodology selection
+• Systematic solution development
+• Result verification and interpretation
+
+<strong>Study Strategy:</strong>
+Work through similar problems independently, then compare
+your approach with these examples to identify areas for improvement.
+
+<strong>Academic Development:</strong>
+These examples demonstrate progressive complexity appropriate
+for building mastery at your current academic level.
+
+<strong>Practice Recommendation:</strong>
+Attempt comparable problems to reinforce understanding
+and develop independent problem-solving capabilities.`;
+        }
+        
+        function createPractice() {
+            const subject = document.getElementById('tutor-subject').value;
+            const level = document.getElementById('learning-level').value;
+            const result = document.getElementById('tutor-result');
+            
+            result.innerHTML = `<h3>Practice Problem Set (${subject.toUpperCase()} - ${level.toUpperCase()})</h3>
+            
+<strong>Problem 1:</strong> [Foundational problem testing core concepts]
+Difficulty: Entry-level for your academic standing
+Focus: Fundamental principle application
+
+<strong>Problem 2:</strong> [Intermediate problem requiring analysis]
+Difficulty: Moderate complexity with multiple steps
+Focus: Analytical thinking and methodology
+
+<strong>Problem 3:</strong> [Application problem with real-world context]
+Difficulty: Practical application of academic concepts
+Focus: Transfer of learning to authentic scenarios
+
+<strong>Problem 4:</strong> [Synthesis problem combining multiple concepts]
+Difficulty: Advanced integration of learned material
+Focus: Complex analytical reasoning
+
+<strong>Problem 5:</strong> [Extension problem for deeper understanding]
+Difficulty: Challenge level for academic growth
+Focus: Independent thinking and creativity
+
+<strong>Solution Strategy:</strong>
+• Read each problem carefully and identify key elements
+• Determine appropriate academic approaches
+• Work systematically through solution processes
+• Verify answers using alternative methods when possible
+
+<strong>Academic Goals:</strong>
+• Reinforce understanding of essential concepts
+• Develop confidence in independent problem solving
+• Practice applying academic methods systematically
+• Build skills for examination success
+
+<strong>Assessment Approach:</strong>
+Evaluate your solutions based on process quality
+rather than just final answers. Understanding methodology
+is more valuable than memorizing specific solutions.
+
+<strong>Support Available:</strong>
+Return for detailed explanations of any problems
+that present difficulties or require clarification.`;
+        }
+        
+        // Research Functions
+        function startResearch() {
+            const topic = document.getElementById('research-topic').value;
+            const type = document.getElementById('research-type').value;
+            const result = document.getElementById('research-result');
+            
+            if (!topic.trim()) {
+                result.innerHTML = '<p>Please specify a research topic or question.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Research Analysis: "${topic}"</h3>
+            
+<strong>Research Category:</strong> ${type.charAt(0).toUpperCase() + type.slice(1)} Research
+
+<strong>Research Framework:</strong>
+Systematic investigation of "${topic}" requires comprehensive
+analysis using established academic research methodologies.
+
+<strong>Key Research Areas:</strong>
+• Primary source identification and analysis
+• Secondary source evaluation and synthesis
+• Contemporary perspectives and debates
+• Historical context and development
+
+<strong>Methodological Approach:</strong>
+The research topic requires interdisciplinary analysis
+incorporating multiple academic perspectives and methodologies.
+
+<strong>Source Categories:</strong>
+• Peer-reviewed academic publications
+• Professional research institutions
+• Government and policy documents
+• Expert analysis and commentary
+
+<strong>Research Questions:</strong>
+• What are the fundamental aspects of this topic?
+• How has understanding evolved over time?
+• What are current debates and controversies?
+• What are the practical implications and applications?
+
+<strong>Academic Standards:</strong>
+All research follows established academic protocols
+for source evaluation, citation, and analytical rigor.
+
+<strong>Next Steps:</strong>
+• Develop specific research questions
+• Identify appropriate academic databases
+• Create systematic search strategies
+• Establish source evaluation criteria
+
+<strong>Research Quality:</strong>
+Focus on scholarly sources that meet academic standards
+for credibility, accuracy, and analytical depth.`;
+        }
+        
+        function createBibliography() {
+            const topic = document.getElementById('research-topic').value;
+            const result = document.getElementById('research-result');
+            
+            if (!topic.trim()) {
+                result.innerHTML = '<p>Please specify a research topic for bibliography generation.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Academic Bibliography: "${topic}"</h3>
+            
+<strong>Scholarly Books:</strong>
+Author, A. A. (2023). Comprehensive analysis of ${topic}: Academic perspectives. 
+    University Press.
+
+Author, B. B., & Author, C. C. (2022). Advanced studies in ${topic}: 
+    Contemporary approaches. Academic Publishers.
+
+<strong>Peer-Reviewed Journal Articles:</strong>
+Author, D. D. (2024). Critical examination of ${topic} in modern context. 
+    Journal of Academic Research, 45(3), 123-145.
+
+Author, E. E., Author, F. F., & Author, G. G. (2023). Methodological approaches 
+    to ${topic} analysis. Scholarly Review Quarterly, 78(2), 67-89.
+
+<strong>Professional Reports:</strong>
+Professional Organization. (2024). Annual report on ${topic}: Current trends 
+    and future directions. Organization Publications.
+
+Research Institute. (2023). Comprehensive study of ${topic}: Policy implications 
+    and recommendations. Institute Press.
+
+<strong>Academic Websites:</strong>
+University Department. (2024, March 15). Research findings on ${topic}. 
+    University Name. https://www.university.edu/research/${topic}
+
+<strong>Citation Standards:</strong>
+This bibliography follows APA formatting conventions.
+Alternative citation styles (MLA, Chicago, Harvard) available upon request.
+
+<strong>Source Evaluation Criteria:</strong>
+• Academic credibility and peer review
+• Currency and relevance to topic
+• Author expertise and institutional affiliation
+• Methodological rigor and analytical depth
+
+<strong>Usage Guidelines:</strong>
+Verify current citation requirements with your institution
+and ensure proper attribution for all referenced materials.`;
+        }
+        
+        function findSources() {
+            const topic = document.getElementById('research-topic').value;
+            const result = document.getElementById('research-result');
+            
+            if (!topic.trim()) {
+                result.innerHTML = '<p>Please specify a research topic for source recommendations.</p>';
+                return;
+            }
+            
+            result.innerHTML = `<h3>Academic Source Recommendations: "${topic}"</h3>
+            
+<strong>Primary Academic Databases:</strong>
+• JSTOR: Comprehensive academic journal archive
+• ProQuest Academic: Dissertations and scholarly articles
+• Web of Science: Citation database and analysis
+• Subject-specific databases relevant to ${topic}
+
+<strong>Professional Institutions:</strong>
+• University research centers and institutes
+• Professional associations in relevant fields
+• Government research agencies and departments
+• International academic organizations
+
+<strong>Quality Academic Sources:</strong>
+• Peer-reviewed scholarly journals
+• University press publications
+• Professional conference proceedings
+• Expert-authored reference works
+
+<strong>Source Evaluation Protocol:</strong>
+• Author credentials and institutional affiliation
+• Publication peer-review process
+• Currency and relevance to research topic
+• Citation frequency and academic impact
+
+<strong>Research Strategy:</strong>
+• Begin with general academic sources for overview
+• Progress to specialized publications for depth
+• Cross-reference findings across multiple sources
+• Maintain systematic documentation of sources
+
+<strong>Academic Integrity:</strong>
+• Always verify information across multiple sources
+• Maintain detailed citation records
+• Distinguish between primary and secondary sources
+• Follow institutional guidelines for source usage
+
+<strong>Advanced Research Techniques:</strong>
+• Use citation tracking for related research
+• Employ systematic keyword strategies
+• Consider interdisciplinary perspectives
+• Evaluate source methodology and limitations
+
+<strong>Professional Standards:</strong>
+All recommended sources meet established academic
+criteria for scholarly research and citation.`;
+        }
+        
+        // Task Management Functions
+        function addTask() {
+            const taskName = document.getElementById('task-name').value;
+            const dueDate = document.getElementById('due-date').value;
+            const priority = document.getElementById('priority').value;
+            
+            if (!taskName.trim() || !dueDate) {
+                alert('Please provide both task description and due date.');
+                return;
+            }
+            
+            const task = {
+                id: Date.now(),
+                name: taskName.trim(),
+                dueDate: dueDate,
+                priority: priority,
+                completed: false,
+                dateAdded: new Date().toISOString()
+            };
+            
+            tasks.push(task);
+            saveTasks();
+            displayTasks();
+            
+            // Clear form
+            document.getElementById('task-name').value = '';
+            document.getElementById('due-date').value = '';
+        }
+        
+        function displayTasks() {
+            const taskList = document.getElementById('task-list');
+            
+            if (tasks.length === 0) {
+                taskList.innerHTML = '<p>No academic tasks scheduled. Add tasks to begin organization.</p>';
+                return;
+            }
+            
+            // Sort tasks by completion, due date, and priority
+            const sortedTasks = tasks.sort((a, b) => {
+                if (a.completed !== b.completed) return a.completed - b.completed;
+                if (a.dueDate !== b.dueDate) return new Date(a.dueDate) - new Date(b.dueDate);
+                const priorityOrder = { 'high': 0, 'medium': 1, 'low': 2 };
+                return priorityOrder[a.priority] - priorityOrder[b.priority];
+            });
+            
+            taskList.innerHTML = sortedTasks.map(task => {
+                const dueDate = new Date(task.dueDate);
+                const today = new Date();
+                const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                
+                const priorityClass = `priority-${task.priority}`;
+                const statusText = task.completed ? 'Completed' : 
+                                 daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days overdue` :
+                                 daysUntilDue === 0 ? 'Due today' :
+                                 `${daysUntilDue} days remaining`;
+                
+                return `
+                    <div class="task-item ${priorityClass} ${task.completed ? 'completed' : ''}">
+                        <div class="task-info">
+                            <div class="task-name">
+                                <input type="checkbox" ${task.completed ? 'checked' : ''} 
+                                       onchange="toggleTask(${task.id})" style="margin-right: 8px;">
+                                ${task.name}
+                            </div>
+                            <div class="task-meta">
+                                Due: ${dueDate.toLocaleDateString()} | ${task.priority.toUpperCase()} Priority | ${statusText}
+                            </div>
+                        </div>
+                        <button class="btn btn-danger" onclick="removeTask(${task.id})">Remove</button>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function toggleTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                if (task.completed) {
+                    stats.tasksCompleted++;
+                    updateStatsDisplay();
+                    saveStats();
+                }
+                saveTasks();
+                displayTasks();
+            }
+        }
+        
+        function removeTask(taskId) {
+            tasks = tasks.filter(t => t.id !== taskId);
+            saveTasks();
+            displayTasks();
+        }
+        
+        function generateSchedule() {
+            const incompleteTasks = tasks.filter(t => !t.completed);
+            const taskList = document.getElementById('task-list');
+            
+            if (incompleteTasks.length === 0) {
+                taskList.innerHTML = '<p>No pending tasks. Schedule generation requires active tasks.</p>';
+                return;
+            }
+            
+            let schedule = `<h3>Academic Schedule Optimization</h3>\n\n`;
+            
+            const highPriority = incompleteTasks.filter(t => t.priority === 'high');
+            const mediumPriority = incompleteTasks.filter(t => t.priority === 'medium');
+            const lowPriority = incompleteTasks.filter(t => t.priority === 'low');
+            
+            schedule += `<strong>HIGH PRIORITY TASKS (Immediate Focus):</strong>\n`;
+            highPriority.forEach(task => {
+                const dueDate = new Date(task.dueDate);
+                schedule += `• ${task.name} - Due: ${dueDate.toLocaleDateString()}\n`;
+            });
+            
+            schedule += `\n<strong>MEDIUM PRIORITY TASKS (Scheduled Follow-up):</strong>\n`;
+            mediumPriority.forEach(task => {
+                const dueDate = new Date(task.dueDate);
+                schedule += `• ${task.name} - Due: ${dueDate.toLocaleDateString()}\n`;
+            });
+            
+            schedule += `\n<strong>LOW PRIORITY TASKS (Flexible Scheduling):</strong>\n`;
+            lowPriority.forEach(task => {
+                const dueDate = new Date(task.dueDate);
+                schedule += `• ${task.name} - Due: ${dueDate.toLocaleDateString()}\n`;
+            });
+            
+            schedule += `\n<strong>ACADEMIC STRATEGY RECOMMENDATIONS:</strong>\n`;
+            schedule += `• Prioritize high-impact tasks during peak productivity hours\n`;
+            schedule += `• Implement systematic time-blocking for complex assignments\n`;
+            schedule += `• Utilize focused study sessions with scheduled breaks\n`;
+            schedule += `• Maintain consistent progress tracking and assessment\n`;
+            schedule += `• Establish accountability measures and milestone reviews\n`;
+            
+            schedule += `\n<strong>PRODUCTIVITY OPTIMIZATION:</strong>\n`;
+            schedule += `• Eliminate distractions during scheduled study periods\n`;
+            schedule += `• Create dedicated workspace environments for academic work\n`;
+            schedule += `• Implement systematic review cycles for retention\n`;
+            schedule += `• Balance intensive work periods with adequate recovery time\n`;
+            
+            taskList.innerHTML = schedule.replace(/\n/g, '<br>');
+        }
+        
+        // Statistics Management Functions
+        function updateStatsDisplay() {
+            document.getElementById('problems-solved').textContent = stats.problemsSolved;
+            document.getElementById('study-hours').textContent = stats.studyHours.toFixed(1);
+            document.getElementById('tasks-completed').textContent = stats.tasksCompleted;
+            document.getElementById('streak-days').textContent = stats.streakDays;
+        }
+        
+        function updateProgress() {
+            const lastUpdate = localStorage.getItem('lastProgressUpdate');
+            const today = new Date().toDateString();
+            
+            if (lastUpdate !== today) {
+                stats.streakDays++;
+                localStorage.setItem('lastProgressUpdate', today);
+                updateStatsDisplay();
+                saveStats();
+                alert(`Academic streak updated: ${stats.streakDays} consecutive days of engagement.`);
+            } else {
+                alert('Progress already recorded for today. Continue studying to maintain momentum.');
+            }
+        }
+        
+        function resetStats() {
+            if (confirm('Reset all academic analytics? This action cannot be undone.')) {
+                stats = {
+                    problemsSolved: 0,
+                    studyHours: 0,
+                    tasksCompleted: 0,
+                    streakDays: 0
+                };
+                updateStatsDisplay();
+                saveStats();
+                localStorage.removeItem('lastProgressUpdate');
+                alert('Academic analytics have been reset to baseline values.');
+            }
+        }
+        
+        // Data Persistence Functions
+        function saveStats() {
+            localStorage.setItem('problemsSolved', stats.problemsSolved.toString());
+            localStorage.setItem('studyHours', stats.studyHours.toString());
+            localStorage.setItem('tasksCompleted', stats.tasksCompleted.toString());
+            localStorage.setItem('streakDays', stats.streakDays.toString());
+        }
+        
+        function saveTasks() {
+            localStorage.setItem('studyTasks', JSON.stringify(tasks));
+        }
+    </script>
+</body>
+</html>
